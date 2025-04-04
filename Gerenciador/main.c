@@ -24,9 +24,6 @@ int main () {
             case 2:
                 listarSenhas();
                 break;
-            case 3:
-                removerSenhas();
-                break;
             default:
                 printf("Opção inválida.\n");
         }
