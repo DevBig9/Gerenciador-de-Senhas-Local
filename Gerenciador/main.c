@@ -12,7 +12,6 @@ int main () {
 
         printf("1) Adicionar Senha\n");
         printf("2) Listar Senhas\n");
-        printf("3) Remover Senha\n");
         printf("0) Sair\n");
         printf("Escolha: ");
         scanf("%d", &opcao);
