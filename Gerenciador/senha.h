@@ -10,6 +10,6 @@ typedef struct {
 
 void adicionarSenha();
 void listarSenhas();
-void removerSenha();
+
 
 #endif

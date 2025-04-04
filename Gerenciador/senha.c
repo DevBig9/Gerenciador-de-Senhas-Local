@@ -43,8 +43,7 @@ void listarSenhas() {
     fclose(arquivo);
 }
 
-void removerSenha() {
-    printf("Função de remover ainda não implementada.\n");
-}
+
+
 
     
