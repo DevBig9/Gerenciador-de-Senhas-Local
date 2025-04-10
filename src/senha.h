@@ -5,7 +5,6 @@ typedef struct {
     char servico [50];
     char login [50];
     char senha [50];
-
 } Registro;
 
 void adicionarSenha();

@@ -4,6 +4,7 @@
 
 int main () {
     int opcao;
+    char buffer[10];
 
     do { 
         printf("\n*----------------------------*\n");
@@ -14,6 +15,8 @@ int main () {
         printf("2) Listar Senhas\n");
         printf("0) Sair\n");
         printf("Escolha: ");
+
+        fgets(buffer, sizeof(buffer), stdin);
         scanf("%d", &opcao);
 
         switch(opcao) {
@@ -22,6 +25,9 @@ int main () {
                 break;
             case 2:
                 listarSenhas();
+                break;
+            case 0:
+                printf("Saindo...\n");
                 break;
             default:
                 printf("Opção inválida.\n");
