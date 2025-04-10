@@ -4,6 +4,52 @@
 #include "senha.h"
 
 #define DB_PATH "data/senhas.txt"
+#define SENHA_MESTRE_PATH "data/senha_mestra.txt"
+
+
+void cadastrarSenhaMestre() {
+    char senha[50];
+
+    printf("Crie uma senha mestre: ");
+    fgets(senha, sizeof(senha), stdin);
+    senha[strcspn(senha, "\n")] = '\0';
+
+    FILE *arquivo = fopen(SENHA_MESTRE_PATH, "w");
+    if (arquivo == NULL) {
+        printf("Erro ao salvar a senha mestre!\n");
+        exit(1);
+    }
+
+    fprintf(arquivo, "%s", senha);
+    fclose(arquivo);
+    printf("Senha mestre cadastrada com sucesso!\n");
+}
+
+int verificarSenhaMestre() {
+    FILE *arquivo = fopen(SENHA_MESTRE_PATH, "r");
+    if (arquivo == NULL) {
+        cadastrarSenhaMestre();
+        return 1;
+    }
+
+    char senhaSalva[50], senhaDigitada[50];
+
+    fgets(senhaSalva, sizeof(senhaSalva), arquivo);
+    fclose(arquivo);
+    senhaSalva[strcspn(senhaSalva, "\n")] = '\0';
+
+    printf("Digite a senha mestre: ");
+    fgets(senhaDigitada, sizeof(senhaDigitada), stdin);
+    senhaDigitada[strcspn(senhaDigitada, "\n")] = '\0';
+
+    if (strcmp(senhaSalva, senhaDigitada) == 0) {
+        printf("Acesso permitido!\n");
+        return 1;
+    } else {
+        printf("Senha incorreta. Acesso negado.\n");
+        return 0;
+    }
+}
 
 void adicionarSenha() {
     Registro r;

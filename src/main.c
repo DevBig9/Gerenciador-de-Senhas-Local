@@ -5,7 +5,9 @@
 int main () {
     int opcao;
     char buffer[10];
-
+if (!verificarSenhaMestre()) {
+    return 1;
+}
     do { 
         printf("\n*----------------------------*\n");
         printf("   & Gerenciador de Senhas &  \n");

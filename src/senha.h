@@ -7,6 +7,9 @@ typedef struct {
     char senha [50];
 } Registro;
 
+int verificarSenhaMestre();
+void cadastrarSenhaMestre();
+
 void adicionarSenha();
 void listarSenhas();
 
