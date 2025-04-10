@@ -100,3 +100,42 @@ void listarSenhas() {
 
     fclose(arquivo);
 }
+
+
+void removerSenha() {
+    char alvo[50];
+    Registro r;
+    int removido = 0;
+
+    printf("Digite o nome do serviço a ser removido: ");
+    fgets(alvo, sizeof(alvo), stdin);
+    alvo[strcspn(alvo, "\n")] = '\0';
+
+    FILE *arquivo = fopen(DB_PATH, "r");
+    FILE *temp = fopen("data/temp.txt", "w");
+
+    if (arquivo == NULL || temp == NULL) {
+        printf("Erro ao abrir os arquivos!\n");
+        return;
+    }
+
+    while (fscanf(arquivo, "%49[^;];%49[^;];%49[^\n]\n", r.servico, r.login, r.senha) == 3) {
+        if (strcmp(r.servico, alvo) != 0) {
+            fprintf(temp, "%s;%s;%s\n", r.servico, r.login, r.senha);
+        } else {
+            removido = 1;
+        }
+    }
+
+    fclose(arquivo);
+    fclose(temp);
+
+    remove(DB_PATH);
+    rename("data/temp.txt", DB_PATH);
+
+    if (removido) {
+        printf("Senha removida com sucesso!\n");
+    } else {
+        printf("Serviço não encontrado.\n");
+    }
+}

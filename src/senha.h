@@ -11,6 +11,7 @@ int verificarSenhaMestre();
 void cadastrarSenhaMestre();
 
 void adicionarSenha();
+void removerSenha();
 void listarSenhas();
 
 
