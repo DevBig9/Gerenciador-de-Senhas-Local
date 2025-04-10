@@ -15,7 +15,7 @@ void adicionarSenha() {
     printf("Senha: ");
     scanf(" %[^\n]", r.senha);
 
-    FILE *arquivo = fopen("senhas.txt", "a");
+    FILE *arquivo = fopen("data/senhas.txt", "a");
     if (arquivo == NULL) {
         printf("Erro ao abrir o arquivo!\n");
         return;
