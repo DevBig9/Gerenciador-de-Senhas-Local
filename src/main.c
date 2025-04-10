@@ -4,6 +4,11 @@
 
 int main () {
     int opcao;
+    char buffer[10];
+
+    if (!verificarSenhaMestre()) {
+        return 1;
+    }
 
     do { 
         printf("\n*----------------------------*\n");
@@ -12,9 +17,12 @@ int main () {
 
         printf("1) Adicionar Senha\n");
         printf("2) Listar Senhas\n");
+        printf("3) Remover Senha\n");
         printf("0) Sair\n");
         printf("Escolha: ");
-        scanf("%d", &opcao);
+
+        fgets(buffer, sizeof(buffer), stdin);  
+        sscanf(buffer, "%d", &opcao);          
 
         switch(opcao) {
             case 1:
@@ -23,6 +31,12 @@ int main () {
             case 2:
                 listarSenhas();
                 break;
+            case 3:
+                removerSenha();
+                break;
+            case 0:
+                printf("Saindo...\n");
+                break;
             default:
                 printf("Opção inválida.\n");
         }
@@ -30,5 +44,4 @@ int main () {
     } while(opcao != 0);
 
     return 0;
-
 }
