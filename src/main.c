@@ -8,6 +8,7 @@ int main () {
 if (!verificarSenhaMestre()) {
     return 1;
 }
+
     do { 
         printf("\n*----------------------------*\n");
         printf("   & Gerenciador de Senhas &  \n");
