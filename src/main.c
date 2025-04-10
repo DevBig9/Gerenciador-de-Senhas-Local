@@ -5,9 +5,10 @@
 int main () {
     int opcao;
     char buffer[10];
-if (!verificarSenhaMestre()) {
-    return 1;
-}
+
+    if (!verificarSenhaMestre()) {
+        return 1;
+    }
 
     do { 
         printf("\n*----------------------------*\n");
@@ -19,8 +20,8 @@ if (!verificarSenhaMestre()) {
         printf("0) Sair\n");
         printf("Escolha: ");
 
-        fgets(buffer, sizeof(buffer), stdin);
-        scanf("%d", &opcao);
+        fgets(buffer, sizeof(buffer), stdin);  
+        sscanf(buffer, "%d", &opcao);          
 
         switch(opcao) {
             case 1:
@@ -39,5 +40,4 @@ if (!verificarSenhaMestre()) {
     } while(opcao != 0);
 
     return 0;
-
 }
