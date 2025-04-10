@@ -33,22 +33,29 @@ int verificarSenhaMestre() {
     }
 
     char senhaSalva[50], senhaDigitada[50];
+    int tentativas = 3;
 
     fgets(senhaSalva, sizeof(senhaSalva), arquivo);
     fclose(arquivo);
     senhaSalva[strcspn(senhaSalva, "\n")] = '\0';
 
-    printf("Digite a senha mestre: ");
-    fgets(senhaDigitada, sizeof(senhaDigitada), stdin);
-    senhaDigitada[strcspn(senhaDigitada, "\n")] = '\0';
+    while (tentativas > 0) {
+        printf("Digite a senha mestre (%d tentativa%s restante%s): ",
+                tentativas, tentativas == 1 ? "" : "s", tentativas == 1 ? "" : "s");
+        fgets(senhaDigitada, sizeof(senhaDigitada), stdin);
+        senhaDigitada[strcspn(senhaDigitada, "\n")] = '\0';
 
-    if (strcmp(senhaSalva, senhaDigitada) == 0) {
-        printf("Acesso permitido!\n");
-        return 1;
-    } else {
-        printf("Senha incorreta. Acesso negado.\n");
-        return 0;
+        if (strcmp(senhaSalva, senhaDigitada) == 0) {
+            printf("Acesso Permitido!\n");
+            return 1;
+        } else {
+            tentativas--;
+            printf("Senha incorreta.\n");
+        }
     }
+
+    printf("Número Máximo de tentativas excedido. Encerrando....\n");
+    return 0;
 }
 
 void adicionarSenha() {
