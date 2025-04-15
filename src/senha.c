@@ -235,3 +235,27 @@ void editarSenha() {
         printf("Serviço não encontrado.\n");
     }
 }
+
+void exportarSenhas() {
+    Registro r;
+
+    FILE *arquivo = fopen(DB_PATH, "r");
+    FILE *csv = fopen("data/exportado.csv", "w");
+
+    if (arquivo == NULL || csv == NULL) {
+        printf("Erro ao abrir os arquivos para exportação.\n");
+        return;
+    }
+
+    fprintf(csv, "Serviço,Login,Senha\n"); 
+
+    while (fscanf(arquivo, "%49[^;];%49[^;];%49[^\n]\n", r.servico, r.login, r.senha) == 3) {
+        
+        fprintf(csv, "%s,%s,%s\n", r.servico, r.login, r.senha);
+    }
+
+    fclose(arquivo);
+    fclose(csv);
+
+    printf("Senhas exportadas com sucesso para 'data/exportado.csv'!\n");
+}
