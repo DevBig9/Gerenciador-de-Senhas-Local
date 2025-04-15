@@ -179,7 +179,6 @@ void buscarSenha() {
             printf("\n🔎 Serviço encontrado!\n");
             printf("Serviço: %s\nLogin: %s\nSenha> %s\n", r.servico, r.login, r.senha);
             encontrado = 1;
-            break;
         }
     }
 
