@@ -188,3 +188,50 @@ void buscarSenha() {
         printf("❌ Serviço '%s' não encontrado.\n", alvo);
     }
 }
+
+void editarSenha() {
+    char alvo[50];
+    char novaSenha[50];
+    Registro r;
+    int alterado = 0;
+
+    printf("Digite o nome do serviço que deseja editar: ");
+    fgets(alvo, sizeof(alvo), stdin);
+    alvo[strcspn(alvo, "\n")] = '\0';
+
+    FILE *arquivo = fopen(DB_PATH, "r");
+    FILE *temp = fopen("data/temp.txt", "w");
+
+    if (arquivo == NULL || temp == NULL) {
+        printf("Erro ao abrir os arquivos!\n");
+        return;
+    }
+
+    while (fscanf(arquivo, "%49[^;];%49[^;];%49[^\n]\n", r.servico, r.login, r.senha) == 3) {
+        if (strcmp(r.servico, alvo) == 0) {
+            printf("Serviço: %s | Login: %s | Senha atual: [oculta]\n", r.servico, r.login);
+
+            printf("Digite a nova senha: ");
+            fgets(novaSenha, sizeof(novaSenha), stdin);
+            novaSenha[strcspn(novaSenha, "\n")] = '\0';
+            criptografar(novaSenha);
+
+            fprintf(temp, "%s;%s;%s\n", r.servico, r.login, novaSenha);
+            alterado = 1;
+        } else {
+            fprintf(temp, "%s;%s;%s\n", r.servico, r.login, r.senha);
+        }
+    }
+
+    fclose(arquivo);
+    fclose(temp);
+
+    remove(DB_PATH);
+    rename("data/temp.txt", DB_PATH);
+
+    if (alterado) {
+        printf("Senha atualizada com sucesso!\n");
+    } else {
+        printf("Serviço não encontrado.\n");
+    }
+}

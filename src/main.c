@@ -19,6 +19,7 @@ int main () {
         printf("2) Listar Senhas\n");
         printf("3) Remover Senha\n");
         printf("4) Buscar Senha por Serviço\n");
+        printf("5) Editar Senha\n");
         printf("0) Sair\n");
         printf("Escolha: ");
 
@@ -37,6 +38,9 @@ int main () {
                 break;
             case 4:
                 buscarSenha();
+                break;
+            case 5:
+                editarSenha();
                 break;
             case 0:
                 printf("Saindo...\n");

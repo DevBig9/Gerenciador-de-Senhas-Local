@@ -13,6 +13,7 @@ void cadastrarSenhaMestre();
 void adicionarSenha();
 void removerSenha();
 void listarSenhas();
+void editarSenha();
 
 void criptografar(char *texto);
 void descriptografar(char *texto);
