@@ -73,6 +73,8 @@ void adicionarSenha() {
     fgets(r.senha, sizeof(r.senha), stdin);
     r.senha[strcspn(r.senha, "\n")] = '\0';
 
+    criptografar(r.senha);
+
     FILE *arquivo = fopen(DB_PATH, "a");
     if (arquivo == NULL) {
         printf("Erro ao abrir o arquivo!\n");
@@ -86,6 +88,7 @@ void adicionarSenha() {
 }
 
 void listarSenhas() {
+    
     FILE *arquivo = fopen(DB_PATH, "r");
     if (arquivo == NULL) {
         printf("Nenhuma senha salva ainda ou erro ao abrir o arquivo.\n");
@@ -93,6 +96,8 @@ void listarSenhas() {
     }
 
     Registro r;
+    descriptografar(r.senha);
+
     printf("\n=== Lista de Senhas ===\n");
     while (fscanf(arquivo, "%49[^;];%49[^;];%49[^\n]\n", r.servico, r.login, r.senha) == 3) {
         printf("Serviço: %s | Login: %s | Senha: %s\n", r.servico, r.login, r.senha);
@@ -137,5 +142,17 @@ void removerSenha() {
         printf("Senha removida com sucesso!\n");
     } else {
         printf("Serviço não encontrado.\n");
+    }
+}
+
+void criptografar(char *texto) {
+    for (int i = 0; texto [i] != '\0'; i++) {
+        texto[i] += 3;
+    }
+}
+
+void descriptografar(char *texto) {
+    for (int i = 0; texto[i] != '\0'; i++) {
+        texto[i] -= 3; 
     }
 }

@@ -14,5 +14,8 @@ void adicionarSenha();
 void removerSenha();
 void listarSenhas();
 
+void criptografar(char *texto);
+void descriptografar(char *texto);
+
 
 #endif
