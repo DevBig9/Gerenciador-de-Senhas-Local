@@ -96,10 +96,11 @@ void listarSenhas() {
     }
 
     Registro r;
-    descriptografar(r.senha);
+    
 
     printf("\n=== Lista de Senhas ===\n");
     while (fscanf(arquivo, "%49[^;];%49[^;];%49[^\n]\n", r.servico, r.login, r.senha) == 3) {
+        descriptografar(r.senha);
         printf("Serviço: %s | Login: %s | Senha: %s\n", r.servico, r.login, r.senha);
     }
 
