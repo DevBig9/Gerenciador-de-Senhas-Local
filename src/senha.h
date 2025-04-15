@@ -17,5 +17,7 @@ void listarSenhas();
 void criptografar(char *texto);
 void descriptografar(char *texto);
 
+void buscarSenha();
+
 
 #endif

@@ -157,3 +157,35 @@ void descriptografar(char *texto) {
         texto[i] -= 3; 
     }
 }
+
+void buscarSenha() {
+    char alvo[50];
+    Registro r;
+    int encontrado = 0;
+
+    printf("Digite o nome do serviço a buscar: ");
+    fgets(alvo, sizeof(alvo), stdin);
+    alvo[strcspn(alvo, "\n")] = '\0';
+
+    FILE *arquivo = fopen(DB_PATH, "r");
+    if (arquivo == NULL) {
+        printf("Erro ao abrir o arquivo de senhas!\n");
+        return;
+    }
+
+    while (fscanf(arquivo, "%49[^;];%49[^;];%49[^\n]\n", r.servico, r.login, r.senha) == 3) {
+        if (strcmp(r.servico, alvo) == 0) {
+            descriptografar(r.senha);
+            printf("\n🔎 Serviço encontrado!\n");
+            printf("Serviço: %s\nLogin: %s\nSenha> %s\n", r.servico, r.login, r.senha);
+            encontrado = 1;
+            break;
+        }
+    }
+
+    fclose(arquivo);
+
+    if (!encontrado) {
+        printf("❌ Serviço '%s' não encontrado.\n", alvo);
+    }
+}
