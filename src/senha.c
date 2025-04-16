@@ -259,3 +259,29 @@ void exportarSenhas() {
 
     printf("Senhas exportadas com sucesso para 'data/exportado.csv'!\n");
 }
+
+void importarSenhas() {
+    char linha[200];
+    Registro r;
+
+    FILE *csv = fopen("data/importar.csv", "r");
+    FILE *arquivo = fopen(DB_PATH, "a");
+
+    if (csv == NULL || arquivo == NULL) {
+        printf("Erro ao abrir os arquivos para importação.\n");
+        return;
+    }
+
+    fgets(linha, sizeof(linha), csv); // pula cabeçalho
+
+    while (fgets(linha, sizeof(linha), csv)) {
+        sscanf(linha, "%49[^,],%49[^,],%49[^\n]", r.servico, r.login, r.senha);
+        criptografar(r.senha);
+        fprintf(arquivo, "%s;%s;%s\n", r.servico, r.login, r.senha);
+    }
+
+    fclose(csv);
+    fclose(arquivo);
+
+    printf("Senhas importadas com sucesso de 'data/importar.csv'!\n");
+}

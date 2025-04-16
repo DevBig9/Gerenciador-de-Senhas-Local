@@ -21,6 +21,7 @@ int main () {
         printf("4) Buscar Senha por Serviço\n");
         printf("5) Editar Senha\n");
         printf("6) Exportar Senhas (CSV)\n");
+        printf("7) Importar Senhas (CSV)\n");
         printf("0) Sair\n");
         printf("Escolha: ");
 
@@ -45,6 +46,9 @@ int main () {
                 break;
             case 6:
                 exportarSenhas();
+                break;
+            case 7:
+                importarSenhas();
                 break;
             case 0:
                 printf("Saindo...\n");

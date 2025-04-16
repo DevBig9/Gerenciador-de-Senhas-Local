@@ -21,6 +21,7 @@ void descriptografar(char *texto);
 void buscarSenha();
 
 void exportarSenhas();
+void importarSenhas();
 
 
 #endif
