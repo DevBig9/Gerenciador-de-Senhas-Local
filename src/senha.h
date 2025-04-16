@@ -10,10 +10,12 @@ typedef struct {
 int verificarSenhaMestre();
 void cadastrarSenhaMestre();
 
+
 void adicionarSenha();
 void removerSenha();
 void listarSenhas();
 void editarSenha();
+void gerarSenhaForte(int tamanho, char *destino);
 
 void criptografar(char *texto);
 void descriptografar(char *texto);

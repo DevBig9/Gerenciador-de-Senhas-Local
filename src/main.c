@@ -22,6 +22,7 @@ int main () {
         printf("5) Editar Senha\n");
         printf("6) Exportar Senhas (CSV)\n");
         printf("7) Importar Senhas (CSV)\n");
+        printf("8) Gerar Senha Forte Aleatória\n");
         printf("0) Sair\n");
         printf("Escolha: ");
 
@@ -50,11 +51,24 @@ int main () {
             case 7:
                 importarSenhas();
                 break;
+            case 8: {
+                int tamanho;
+                char senhaGerada[100];
+
+                printf("Tamanho da senha desejada: ");
+                scanf("%d", &tamanho);
+                getchar();
+
+                gerarSenhaForte(tamanho, senhaGerada);
+                printf("Senha gerada: %s\n", senhaGerada);
+                break;
             case 0:
                 printf("Saindo...\n");
                 break;
             default:
                 printf("Opção inválida.\n");
+            }
+                
         }
 
     } while(opcao != 0);

@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <windows.h>
+#include <time.h>
 #include "senha.h"
 
 #define DB_PATH "data/senhas.txt"
@@ -293,3 +294,19 @@ void importarSenhas() {
 
     printf("Senhas importadas com sucesso de 'data/importar.csv'!\n");
 }
+
+void gerarSenhaForte(int tamanho, char *destino) {
+    const char charset[] = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()-_=+[]{}";
+    int charsetSize = strlen(charset);
+
+    srand(time(NULL));
+
+    for (int i = 0; i < tamanho; i++) {
+        int index = rand() % charsetSize;
+        destino[i] = charset[index];
+    }
+
+    destino[tamanho] = '\0';
+}   
+
+    
