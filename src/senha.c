@@ -70,9 +70,14 @@ int verificarSenhaMestre() {
 void adicionarSenha() {
     Registro r;
 
+    printf("Categoria: ");
+    fgets(r.categoria, sizeof(r.categoria), stdin);
+    r.categoria[strcspn(r.categoria, "\n")] = '\0';
+
+
     printf("Nome do serviço: ");
     fgets(r.servico, sizeof(r.servico), stdin);
-    r.servico[strcspn(r.servico, "\n")] = '\0'; // remove \n
+    r.servico[strcspn(r.servico, "\n")] = '\0'; 
 
     printf("Login: ");
     fgets(r.login, sizeof(r.login), stdin);
@@ -90,7 +95,7 @@ void adicionarSenha() {
         return;
     }
 
-    fprintf(arquivo, "%s;%s;%s\n", r.servico, r.login, r.senha);
+    fprintf(arquivo, "%s;%s;%s;%s\n", r.categoria, r.servico, r.login, r.senha);
     fclose(arquivo);
 
     printf("Senha salva com sucesso!\n\n");
@@ -108,9 +113,10 @@ void listarSenhas() {
     
 
     printf("\n=== Lista de Senhas ===\n");
-    while (fscanf(arquivo, "%49[^;];%49[^;];%49[^\n]\n", r.servico, r.login, r.senha) == 3) {
+    while (fscanf(arquivo, "%49[^;];%49[^;];%49[^;];%49[^\n]\n",
+        r.categoria, r.servico, r.login, r.senha) == 4) {
         descriptografar(r.senha);
-        printf("Serviço: %s | Login: %s | Senha: %s\n", r.servico, r.login, r.senha);
+        printf("[%s] Serviço: %s | Login: %s | Senha: %s\n", r.categoria, r.servico, r.login, r.senha);
     }
 
     fclose(arquivo);
@@ -134,9 +140,10 @@ void removerSenha() {
         return;
     }
 
-    while (fscanf(arquivo, "%49[^;];%49[^;];%49[^\n]\n", r.servico, r.login, r.senha) == 3) {
+    while (fscanf(arquivo, "%49[^;];%49[^;];%49[^;];%49[^\n]\n",
+        r.categoria, r.servico, r.login, r.senha) == 4) {
         if (strcmp(r.servico, alvo) != 0) {
-            fprintf(temp, "%s;%s;%s\n", r.servico, r.login, r.senha);
+            fprintf(temp, "%s;%s;%s;%s\n", r.categoria, r.servico, r.login, r.senha);
         } else {
             removido = 1;
         }
@@ -182,11 +189,12 @@ void buscarSenha() {
         return;
     }
 
-    while (fscanf(arquivo, "%49[^;];%49[^;];%49[^\n]\n", r.servico, r.login, r.senha) == 3) {
+    while (fscanf(arquivo, "%49[^;];%49[^;];%49[^;];%49[^\n]\n",
+        r.categoria, r.servico, r.login, r.senha) == 4) {
         if (strcmp(r.servico, alvo) == 0) {
             descriptografar(r.senha);
             printf("\n🔎 Serviço encontrado!\n");
-            printf("Serviço: %s\nLogin: %s\nSenha> %s\n", r.servico, r.login, r.senha);
+            printf("Categoria: %s\nServiço: %s\nLogin: %s\nSenha> %s\n", r.categoria, r.servico, r.login, r.senha);
             encontrado = 1;
         }
     }
@@ -216,19 +224,20 @@ void editarSenha() {
         return;
     }
 
-    while (fscanf(arquivo, "%49[^;];%49[^;];%49[^\n]\n", r.servico, r.login, r.senha) == 3) {
+    while (fscanf(arquivo, "%49[^;];%49[^;];%49[^;];%49[^\n]\n",
+        r.categoria, r.servico, r.login, r.senha) == 4) {
         if (strcmp(r.servico, alvo) == 0) {
-            printf("Serviço: %s | Login: %s | Senha atual: [oculta]\n", r.servico, r.login);
+            printf("Categoria: %s | Serviço: %s | Login: %s | Senha atual: [oculta]\n", r.servico, r.login);
 
             printf("Digite a nova senha: ");
             fgets(novaSenha, sizeof(novaSenha), stdin);
             novaSenha[strcspn(novaSenha, "\n")] = '\0';
             criptografar(novaSenha);
 
-            fprintf(temp, "%s;%s;%s\n", r.servico, r.login, novaSenha);
+            fprintf(temp, "%s;%s;%s;%s\n", r.categoria, r.servico, r.login, novaSenha);
             alterado = 1;
         } else {
-            fprintf(temp, "%s;%s;%s\n", r.servico, r.login, r.senha);
+            fprintf(temp, "%s;%s;%s;%s\n", r.categoria,  r.servico, r.login, r.senha);
         }
     }
 
@@ -258,9 +267,10 @@ void exportarSenhas() {
 
     fprintf(csv, "Serviço,Login,Senha\n"); 
 
-    while (fscanf(arquivo, "%49[^;];%49[^;];%49[^\n]\n", r.servico, r.login, r.senha) == 3) {
+    while (fscanf(arquivo, "%49[^;];%49[^;];%49[^;];%49[^\n]\n",
+        r.categoria, r.servico, r.login, r.senha) == 4) {
         
-        fprintf(csv, "%s,%s,%s\n", r.servico, r.login, r.senha);
+        fprintf(csv, "%s;%s,%s,%s\n", r.categoria, r.servico, r.login, r.senha);
     }
 
     fclose(arquivo);
@@ -284,9 +294,9 @@ void importarSenhas() {
     fgets(linha, sizeof(linha), csv); // pula cabeçalho
 
     while (fgets(linha, sizeof(linha), csv)) {
-        sscanf(linha, "%49[^,],%49[^,],%49[^\n]", r.servico, r.login, r.senha);
+        sscanf(linha, "%49[^;];%49[^;];%49[^;];%49[^\n]\n", r.categoria, r.servico, r.login, r.senha);
         criptografar(r.senha);
-        fprintf(arquivo, "%s;%s;%s\n", r.servico, r.login, r.senha);
+        fprintf(arquivo, "%s;%s;%s;%s\n", r.categoria, r.servico, r.login, r.senha);
     }
 
     fclose(csv);
