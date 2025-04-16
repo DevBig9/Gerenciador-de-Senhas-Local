@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <windows.h>
 #include "senha.h"
 
 #define DB_PATH "data/senhas.txt"
@@ -25,6 +26,7 @@ void cadastrarSenhaMestre() {
     printf("Senha mestre cadastrada com sucesso!\n");
 }
 
+
 int verificarSenhaMestre() {
     FILE *arquivo = fopen(SENHA_MESTRE_PATH, "r");
     if (arquivo == NULL) {
@@ -41,22 +43,28 @@ int verificarSenhaMestre() {
 
     while (tentativas > 0) {
         printf("Digite a senha mestre (%d tentativa%s restante%s): ",
-                tentativas, tentativas == 1 ? "" : "s", tentativas == 1 ? "" : "s");
+               tentativas, tentativas == 1 ? "" : "s", tentativas == 1 ? "" : "s");
         fgets(senhaDigitada, sizeof(senhaDigitada), stdin);
         senhaDigitada[strcspn(senhaDigitada, "\n")] = '\0';
 
         if (strcmp(senhaSalva, senhaDigitada) == 0) {
-            printf("Acesso Permitido!\n");
+            printf("✅ Acesso permitido!\n");
             return 1;
         } else {
             tentativas--;
-            printf("Senha incorreta.\n");
+            printf("❌ Senha incorreta.\n");
+
+            if (tentativas == 0) {
+                printf("⛔ Número máximo de tentativas excedido. Aguarde 30 segundos...\n");
+                Sleep(30000);  // Se for Windows, usar Sleep(30000)
+                return 0;
+            }
         }
     }
 
-    printf("Número Máximo de tentativas excedido. Encerrando....\n");
     return 0;
 }
+
 
 void adicionarSenha() {
     Registro r;
