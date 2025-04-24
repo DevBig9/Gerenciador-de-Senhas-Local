@@ -99,7 +99,7 @@ void adicionarSenha() {
 
     FILE *arquivo = fopen(DB_PATH, "a");
     if (arquivo == NULL) {
-        printf("Erro ao abrir o arquivo!\n");
+        printf(RED "Erro ao abrir o arquivo!\n" RESET);
         return;
     }
 
@@ -107,7 +107,7 @@ void adicionarSenha() {
     fclose(arquivo);
 
     registrarLog("Senha Adicionada");
-    printf("Senha salva com sucesso!\n\n");
+    printf(GREEN "Senha salva com sucesso!\n\n" RESET);
 }
 
 void listarSenhas() {
@@ -121,11 +121,13 @@ void listarSenhas() {
     Registro r;
     
 
-    printf("\n=== Lista de Senhas ===\n");
+    printf(CYAN "\n📦 Lista de Senhas\n" RESET);
+    printf("─────────────────────────────────────────────\n");
     while (fscanf(arquivo, "%49[^;];%49[^;];%49[^;];%49[^\n]\n",
         r.categoria, r.servico, r.login, r.senha) == 4) {
         descriptografar(r.senha);
-        printf("[%s] Serviço: %s | Login: %s | Senha: %s\n", r.categoria, r.servico, r.login, r.senha);
+        printf("🔐 [%s] %s | 👤 %s | 🔑 %s\n", r.categoria, r.servico, r.login, r.senha);
+
     }
 
     fclose(arquivo);

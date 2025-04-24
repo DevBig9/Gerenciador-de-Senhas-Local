@@ -1,8 +1,17 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "senha.h"
+#define RESET   "\033[0m"
+#define RED     "\033[1;31m"
+#define GREEN   "\033[1;32m"
+#define YELLOW  "\033[1;33m"
+#define BLUE    "\033[1;34m"
+#define CYAN    "\033[1;36m"
 
 int main () {
+    printf("\n");
+    system("chcp 65001"); // Unico modo que eu achei para ele ler a formatação bonitinha e com cores do menu
+    printf("\n");
     int opcao;
     char buffer[10];
 
@@ -11,19 +20,19 @@ int main () {
     }
 
     do { 
-        printf("\n*----------------------------*\n");
-        printf("   & Gerenciador de Senhas &  \n");
-        printf("*----------------------------*\n");
+        printf(CYAN "\n╔═══════════════════════════════╗\n");
+        printf("║      Gerenciador de Senhas     ║\n");
+        printf("╚═══════════════════════════════╝\n" RESET);
 
-        printf("1) Adicionar Senha\n");
-        printf("2) Listar Senhas\n");
-        printf("3) Remover Senha\n");
-        printf("4) Buscar Senha por Serviço\n");
-        printf("5) Editar Senha\n");
-        printf("6) Exportar Senhas (CSV)\n");
-        printf("7) Importar Senhas (CSV)\n");
-        printf("8) Gerar Senha Forte Aleatória\n");
-        printf("0) Sair\n");
+        printf(YELLOW "1" RESET ") Adicionar Senha\n");
+        printf(YELLOW "2" RESET ") Listar Senhas\n");
+        printf(YELLOW "3" RESET ") Remover Senha\n");
+        printf(YELLOW "4" RESET ") Buscar por Serviço\n");
+        printf(YELLOW "5" RESET ") Editar Senha\n");
+        printf(YELLOW "6" RESET ") Exportar Senhas (CSV)\n");
+        printf(YELLOW "7" RESET ") Importar Senhas (CSV)\n");
+        printf(YELLOW "8" RESET ") Gerar Senha Forte\n");
+        printf(YELLOW "0" RESET ") Sair\n");
         printf("Escolha: ");
 
         fgets(buffer, sizeof(buffer), stdin);  
