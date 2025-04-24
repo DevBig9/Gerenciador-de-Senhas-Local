@@ -12,6 +12,7 @@ int main () {
     printf("\n");
     system("chcp 65001"); // Unico modo que eu achei para ele ler a formatação bonitinha e com cores do menu
     printf("\n");
+    
     int opcao;
     char buffer[10];
 
