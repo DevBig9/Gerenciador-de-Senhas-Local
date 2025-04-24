@@ -50,6 +50,7 @@ int verificarSenhaMestre() {
 
         if (strcmp(senhaSalva, senhaDigitada) == 0) {
             printf("✅ Acesso permitido!\n");
+            registrarLog("Login realizado com sucesso");
             return 1;
         } else {
             tentativas--;
@@ -98,6 +99,7 @@ void adicionarSenha() {
     fprintf(arquivo, "%s;%s;%s;%s\n", r.categoria, r.servico, r.login, r.senha);
     fclose(arquivo);
 
+    registrarLog("Senha Adicionada");
     printf("Senha salva com sucesso!\n\n");
 }
 
@@ -157,8 +159,10 @@ void removerSenha() {
 
     if (removido) {
         printf("Senha removida com sucesso!\n");
+        registrarLog("Senha removida");
     } else {
         printf("Serviço não encontrado.\n");
+        registrarLog("Tentativa de remover senha falhou (serviço não encontrado)");
     }
 }
 
@@ -249,6 +253,7 @@ void editarSenha() {
 
     if (alterado) {
         printf("Senha atualizada com sucesso!\n");
+        registrarLog("Senha editada");
     } else {
         printf("Serviço não encontrado.\n");
     }
@@ -277,6 +282,7 @@ void exportarSenhas() {
     fclose(csv);
 
     printf("Senhas exportadas com sucesso para 'data/exportado.csv'!\n");
+    registrarLog("Senhas exportadas para CSV");
 }
 
 void importarSenhas() {
@@ -303,6 +309,7 @@ void importarSenhas() {
     fclose(arquivo);
 
     printf("Senhas importadas com sucesso de 'data/importar.csv'!\n");
+    registrarLog("Senhas importadas de CSV");
 }
 
 void gerarSenhaForte(int tamanho, char *destino) {
@@ -319,4 +326,20 @@ void gerarSenhaForte(int tamanho, char *destino) {
     destino[tamanho] = '\0';
 }   
 
+void registrarLog(const char *acao) {
+    FILE *log = fopen("data/logs.txt", "a");
+    if (log == NULL) return;
+
+
+    time_t agora;
+    time(&agora);
+    struct tm *info = localtime(&agora);
+
+    fprintf(log, "[%02d/%02d/%04d %02d:%02d:%02d] %s\n",
+        info->tm_mday, info->tm_mon + 1, info->tm_year + 1900,
+        info->tm_hour, info->tm_min, info->tm_sec,
+        acao);
+
+        fclose(log);
+}
     

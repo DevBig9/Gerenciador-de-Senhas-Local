@@ -20,6 +20,7 @@ void gerarSenhaForte(int tamanho, char *destino);
 
 void criptografar(char *texto);
 void descriptografar(char *texto);
+void registrarLog(const char *acao);
 
 void buscarSenha();
 
